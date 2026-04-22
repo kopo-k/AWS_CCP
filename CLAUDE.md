@@ -38,3 +38,30 @@ AWS Certified Cloud Practitioner (CCP) 合格を目指す学習リポジトリ
 2. **関連概念** - 理解に必要な背景知識
 3. **ハンズオン** - 実際にAWSで試せる手順（該当する場合）
 4. **関連トピック** - さらに学ぶべき内容
+
+## AWS構成図作成機能
+
+### 概要
+draw.io MCPを使用してAWS公式アイコンスタイルのシステム構成図を自動生成できる。
+
+### 起動方法
+- 自然言語：「システム構成図を書いて」「この構成を図にして」
+- コマンド：`/aws-architecture-diagram`
+
+### 対応サービスと色
+| サービス | 色 |
+|----------|------|
+| Cognito | #C7131F（赤） |
+| AppSync | #BC1356（ピンク） |
+| Lambda | #D05C17（オレンジ） |
+| DynamoDB | #3334B9（青） |
+| S3 | #1B660F（緑） |
+| CloudFront | #7D3F98（紫） |
+
+### 使用例
+「VPC内にEC2とRDSを配置した構成図を作成して」
+→ draw.ioで開ける構成図を自動生成
+
+### 設定済み
+- draw.io MCP: `claude mcp add drawio -- npx -y @drawio/mcp`
+- スキルファイル: `~/.claude/skills/aws-architecture-diagram.md`

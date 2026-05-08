@@ -65,3 +65,37 @@ draw.io MCPを使用してAWS公式アイコンスタイルのシステム構成
 ### 設定済み
 - draw.io MCP: `claude mcp add drawio -- npx -y @drawio/mcp`
 - スキルファイル: `~/.claude/skills/aws-architecture-diagram.md`
+
+## Terraform 学習
+
+### 重要な原則
+1. **terraform.tfstate は絶対にGitHubにpushしない**
+   - 機密情報が含まれる（IPアドレス、アカウントID、リソースID）
+   - `.gitignore` に必ず追加する
+2. **main.tf だけを編集する**
+   - `.terraform/` や `.terraform.lock.hcl` は自動管理
+3. **コンソールで手動作成 → Terraform化** の順で学習
+   - まず手動で理解してから自動化する
+
+### 基本コマンド
+```bash
+terraform init      # 初期化（最初に1回）
+terraform plan      # プレビュー（実行前確認）
+terraform apply     # リソース作成
+terraform destroy   # 全削除
+terraform output    # 出力値表示
+```
+
+### .gitignore 必須設定
+```
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+```
+
+### 学習パス
+- レベル1：EC2 + セキュリティグループ（完了）
+- レベル2：VPC + マルチサブネット構成 ← 現在
+- レベル3：ALB + Auto Scaling + RDS
+- レベル4：変数化・モジュール化・環境分離

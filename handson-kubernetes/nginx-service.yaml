@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: NodePort  # 外部からアクセスできるようにする
+  selector:
+    app: nginx  # app=nginxのラベルを持つPodに転送
+  ports:
+  - protocol: TCP
+    port: 80         # Serviceのポート
+    targetPort: 80   # Podのポート
+    nodePort: 30080  # 外部公開ポート（30000-32767の範囲）

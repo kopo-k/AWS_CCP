@@ -96,6 +96,57 @@ terraform output    # 出力値表示
 
 ### 学習パス
 - レベル1：EC2 + セキュリティグループ（完了）
-- レベル2：VPC + マルチサブネット構成 ← 現在
+- レベル2：VPC + マルチサブネット構成（完了）
 - レベル3：ALB + Auto Scaling + RDS
 - レベル4：変数化・モジュール化・環境分離
+
+## Kubernetes 学習（ローカル環境）
+
+### 重要な原則
+1. **ローカル環境で完全無料**
+   - minikube + Docker Desktop で学習
+   - AWSコストなし
+2. **手を動かして学ぶ**
+   - コマンドとYAMLファイル両方で理解
+   - 実際にPodを作成・削除・更新
+3. **Kubernetesの基礎概念を理解する**
+   - Pod、Deployment、Service、ReplicaSet
+   - 宣言的な設定（YAML）
+
+### 基本コマンド
+```bash
+# クラスター管理
+minikube start       # クラスター起動
+minikube stop        # クラスター停止
+minikube delete      # クラスター削除
+minikube status      # 状態確認
+
+# リソース確認
+kubectl get pods              # Pod一覧
+kubectl get deployments       # Deployment一覧
+kubectl get services          # Service一覧
+kubectl get all               # 全リソース
+
+# リソース作成・削除
+kubectl apply -f <file.yaml>  # YAMLから作成
+kubectl delete -f <file.yaml> # YAMLから削除
+kubectl delete pod <pod名>    # 特定リソース削除
+
+# 詳細確認・デバッグ
+kubectl describe pod <pod名>  # 詳細情報
+kubectl logs <pod名>          # ログ確認
+kubectl exec -it <pod名> -- /bin/bash  # Pod内に入る
+
+# スケーリング・更新
+kubectl scale deployment <名前> --replicas=5  # Pod数変更
+kubectl set image deployment/<名前> <container>=<image>  # イメージ更新
+kubectl rollout undo deployment/<名前>  # ロールバック
+```
+
+### 学習パス
+- ハンズオン⑫：ローカルKubernetes入門（完了予定） ← 現在
+  - minikube環境構築
+  - Pod、Deployment、Service作成
+  - スケーリング、ローリングアップデート
+- 次のステップ：ConfigMap、Secret、Volume、Namespace
+- AWS連携：Amazon ECS（無料枠）、Amazon EKS（有料）

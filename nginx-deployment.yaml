@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+# deploymentの仕様のspec
+spec:
+# 常に3個の状態を維持する
+  replicas: 3
+  # この条件に合うものを全部対象にする
+  selector:
+  # DeploymentがどのPodを管理するかを指定するためのフィールド
+    matchLabels:
+    # app: nginx というラベルのPodを管理する
+      app: nginx
+      # pod作成のtempla
+  template:
+    metadata:
+      labels:
+      # 作成するPodに app: nginx というラベルを付ける
+        app: nginx
+    # podの仕様
+    spec:
+    # このPodに入っているコンテナのリスト
+      containers:
+      # 1番目のコンテナの名前は『nginx』
+      - name: nginx
+      # 中身は nginx:1.21 というイメージ
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+

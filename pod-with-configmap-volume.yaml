@@ -1,0 +1,51 @@
+# Kubernetes API バージョン
+apiVersion: v1
+
+# リソースの種類：Pod（コンテナを実行する最小単位）
+kind: Pod
+
+# Pod の メタデータ（情報）
+metadata:
+  # Pod の 名前（Kubernetes内で一意に識別される）
+  name: app-pod-volume
+
+# Pod の 詳細な仕様（実行内容）
+spec:
+  # このPod内で実行するコンテナのリスト
+  containers:
+  - name: busybox
+    # 使用する Docker イメージ（超軽量のLinux環境）
+    image: busybox:latest
+    # Pod起動時に実行するコマンド
+    # 1. '/etc/config/config.properties' ファイルの内容を表示
+    # 2. その後 3600秒（1時間）スリープする（Podを実行状態に保つ）
+    command: ['sh', '-c', 'cat /etc/config/config.properties; sleep 3600']
+
+    # このコンテナにマウント（接続）するボリュームのリスト
+    volumeMounts:
+    # マウント設定1
+    - name: config-volume
+      # Pod内のどこにマウントするか（パス）
+      # ConfigMapの内容が /etc/config フォルダとして見える
+      mountPath: /etc/config
+
+  # このPodで使用するボリュームのリスト
+  volumes:
+  # ボリューム定義1
+  - name: config-volume
+    # このボリュームは ConfigMap から作成
+    # つまり「ConfigMapの内容をファイルとして見えるようにする」
+    configMap:
+      # マウント対象の ConfigMap の名前
+      # 事前に作成済みの 'app-config' ConfigMap を使用
+      name: app-config
+
+      # ConfigMap内の特定のキーをファイルにマッピング
+      # （「どのキーを、どのファイル名で」という指定）
+      items:
+      # マッピング1
+      - key: config.properties
+        # ConfigMapの 'config.properties' キーを
+        # Pod内では 'config.properties' というファイル名にする
+        # つまり：/etc/config/config.properties というファイルが見える
+        path: config.properties

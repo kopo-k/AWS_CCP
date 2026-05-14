@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  database_host: "postgres-service"
+  database_port: "5432"
+  app_mode: "production"
+  config.properties: |
+    app.name=MyApp
+    app.version=1.0
+    app.debug=false

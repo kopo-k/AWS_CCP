@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    resources:
+    # 最低限保証されるリソース
+      requests:
+      # 10%のCPUを使用する mac m2は８コア 1000m*8 データ処理
+        cpu: 100m
+      # データ保存
+        memory: 128Mi
+      limits:
+      # podが使えるリソースの限界
+      # 処理が遅くなるが、podは動き続ける　処理が遅くなるだけ
+        cpu: 200m
+        # 超えたらOOM(out of memory)停止する
+        memory: 256Mi
